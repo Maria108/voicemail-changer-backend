@@ -1,0 +1,41 @@
+{
+  "name": "stealth-project",
+  "version": "0.0.1",
+  "description": "Stealth project, secret for now ))",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maria108/stealth-project.git"
+  },
+  "keywords": [
+    "aws",
+    "babel",
+    "es6",
+    "lambda",
+    "serverless",
+    "webpack"
+  ],
+  "author": "Maria Abashina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maria108/stealth-project/issues"
+  },
+  "homepage": "https://github.com/maria108/stealth-project#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "dotenv": "^5.0.1",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "serverless-dotenv-plugin": "^1.1.2",
+    "serverless-webpack": "^5.1.5",
+    "webpack": "^4.8.3",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.249.1"
+  }
+}

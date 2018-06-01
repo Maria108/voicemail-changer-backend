@@ -1,0 +1,17 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# Serverless staff
+.serverless
+.webpack
+
+# OSX
+.DS_Store
+
+# ENV var
+.env
