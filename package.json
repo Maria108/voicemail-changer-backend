@@ -36,6 +36,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.249.1"
+    "aws-sdk": "^2.249.1",
+    "uuid": "^3.2.1"
   }
 }

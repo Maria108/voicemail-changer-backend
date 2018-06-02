@@ -38,16 +38,15 @@ provider:
 
 # you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
-      - Effect: Allow
-        Action: # Gives permission to our DynamoDB table.
-          - dynamodb:DeleteItem
-          - dynamodb:GetItem
-          - dynamodb:PutItem
-          - dynamodb:Query
-          - dynamodb:Scan
-          - dynamodb:UpdateItem
-        Resource: "arn:aws:dynamodb:::table/voiceMailChangerTable"
-
+    - Effect: Allow
+      Action: # Gives permission to our DynamoDB table.
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:UpdateItem
+      Resource: "arn:aws:dynamodb:*:*:table/voiceMailChangerTable"
 
 # you can define service wide environment variables here
 #  environment:
