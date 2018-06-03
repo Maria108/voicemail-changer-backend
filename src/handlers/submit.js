@@ -28,6 +28,7 @@ function dbCreateItem(text, name) {
       id: { S: uuidv4() },
       text: { S: text },
       name: { S: name },
+      status: { S: 'PENDING' },
     },
   };
 

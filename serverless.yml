@@ -47,6 +47,10 @@ provider:
         - dynamodb:Scan
         - dynamodb:UpdateItem
       Resource: "arn:aws:dynamodb:*:*:table/voiceMailChangerTable"
+    - Effect: Allow
+      Action: # Gives permission to generate audio.
+        - polly:SynthesizeSpeech
+      Resource: "*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -80,6 +84,17 @@ functions:
       - http:
           path: submit
           method: post
+  generate:
+    handler: src/handlers/generate.generate
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 1
+          enabled: true
+          arn:
+            Fn::GetAtt:
+              - voiceMailChangerTable
+              - StreamArn
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -125,3 +140,5 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
