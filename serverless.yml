@@ -51,6 +51,15 @@ provider:
       Action: # Gives permission to generate audio.
         - polly:SynthesizeSpeech
       Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource:
+        Fn::Join:
+        - ""
+        - - "arn:aws:s3:::"
+          - Ref: S3BucketMP3
+          - "/*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -142,3 +151,7 @@ resources:
           WriteCapacityUnits: 1
         StreamSpecification:
           StreamViewType: NEW_IMAGE
+    S3BucketMP3:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: voicemail-changer-bucket-mp3
