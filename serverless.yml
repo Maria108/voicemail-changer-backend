@@ -51,15 +51,14 @@ provider:
       Action: # Gives permission to generate audio.
         - polly:SynthesizeSpeech
       Resource: "*"
-    - Effect: "Allow"
-      Action:
-        - "s3:PutObject"
+    - Effect: Allow
+      Action: # Gives access to our s3 bucket.
+        - s3:GetObject
+        - s3:PutObject
+        - s3:PutObjectAcl
       Resource:
-        Fn::Join:
-        - ""
-        - - "arn:aws:s3:::"
-          - Ref: S3BucketMP3
-          - "/*"
+        - "arn:aws:s3:::voicemail-changer-bucket-mp3"
+        - "arn:aws:s3:::voicemail-changer-bucket-mp3/*"
 
 # you can define service wide environment variables here
 #  environment:

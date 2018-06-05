@@ -35,14 +35,47 @@ function generateMP3(id, text, name) {
       if (data.AudioStream instanceof Buffer) {
         const s3 = new AWS.S3();
         const s3Params = {
+          ACL: 'public-read', // Make it public.
           Body: data.AudioStream,
-          Bucket: 'voicemail-changer-bucket',
+          ContentType: data.contentType,
+          Bucket: 'voicemail-changer-bucket-mp3',
           Key: `${id}.mp3`,
+          StorageClass: 'REDUCED_REDUNDANCY', // Save costs.
         };
-        s3.putObject(s3Params, (err, data) => {
-          if (err) console.log(err, err.stack);
-          // an error occurred
-          else console.log(data); // successful response
+        s3.upload(s3Params, (err, data) => {
+          if (err) console.log(err, err.stack); // an error occurred
+
+          const { Location } = data;
+          console.log('Location: ', Location);
+
+          const ddb = new AWS.DynamoDB();
+          const ddbParams = {
+            ExpressionAttributeNames: {
+              '#S': 'status',
+              '#U': 'url',
+            },
+            ExpressionAttributeValues: {
+              ':s': {
+                S: 'DONE',
+              },
+              ':u': {
+                S: Location,
+              },
+            },
+            Key: {
+              id: {
+                S: id,
+              },
+            },
+            ReturnValues: 'ALL_NEW',
+            TableName: 'voiceMailChangerTable',
+            UpdateExpression: 'SET #S = :s, #U = :u',
+          };
+          ddb.updateItem(ddbParams, (err, data) => {
+            if (err) console.log(err, err.stack);
+            // an error occurred
+            else console.log(data); // successful response
+          });
         });
         console.log(JSON.stringify(data.AudioStream));
       }
