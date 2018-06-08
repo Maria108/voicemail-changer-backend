@@ -46,7 +46,9 @@ provider:
         - dynamodb:Query
         - dynamodb:Scan
         - dynamodb:UpdateItem
-      Resource: "arn:aws:dynamodb:*:*:table/voiceMailChangerTable"
+      Resource:
+        - "arn:aws:dynamodb:*:*:table/voiceMailChangerTable"
+        - "arn:aws:dynamodb:*:*:table/voicemailChangerUsers"
     - Effect: Allow
       Action: # Gives permission to generate audio.
         - polly:SynthesizeSpeech
@@ -91,6 +93,18 @@ functions:
     events:
       - http:
           path: submit
+          method: post
+  sugnup:
+    handler: src/handlers/signup.signup
+    events:
+      - http:
+          path: signup
+          method: post
+  login:
+    handler: src/handlers/login.login
+    events:
+      - http:
+          path: login
           method: post
   generate:
     handler: src/handlers/generate.generate
@@ -139,6 +153,21 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: voiceMailChangerTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+    voicemailChangerUsers:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: voicemailChangerUsers
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S

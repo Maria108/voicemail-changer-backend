@@ -2,33 +2,32 @@ const querystring = require('querystring');
 const AWS = require('aws-sdk');
 const uuidv4 = require('uuid/v4');
 
-export const submit = (event, context, callback) => {
+export const signup = (event, context, callback) => {
   const requestBody = querystring.parse(event.body);
-  const { text, name } = requestBody;
+  const { phone } = requestBody;
 
-  dbCreateItem(text, name);
+  dbCreateItem(phone);
 
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      text,
-      name,
+      phone,
     }),
   };
 
   callback(null, response);
 };
 
-function dbCreateItem(text, name) {
+function dbCreateItem(phone) {
   const ddb = new AWS.DynamoDB();
+  const password = uuidv4().split('-')[0];
 
   const params = {
-    TableName: 'voiceMailChangerTable',
+    TableName: 'voicemailChangerUsers',
     Item: {
       id: { S: uuidv4() },
-      text: { S: text },
-      name: { S: name },
-      status: { S: 'PENDING' },
+      password: { S: password },
+      phone: { S: phone },
     },
   };
 
