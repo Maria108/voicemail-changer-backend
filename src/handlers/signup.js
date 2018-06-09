@@ -6,8 +6,6 @@ export const signup = (event, context, callback) => {
   const requestBody = querystring.parse(event.body);
   const { phone } = requestBody;
 
-  console.log(requestBody);
-
   dbCreateItem(phone);
 
   const response = {

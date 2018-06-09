@@ -86,25 +86,13 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: src/handler.hello
-    events:
-      - http:
-          path: welcome
-          method: get
-  random:
-    handler: src/test.randomNumber
-    events:
-      - http:
-          path: number
-          method: get
   submit:
     handler: src/handlers/submit.submit
     events:
       - http:
           path: submit
           method: post
-  sugnup:
+  signup:
     handler: src/handlers/signup.signup
     events:
       - http:

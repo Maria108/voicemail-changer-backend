@@ -4,7 +4,7 @@ export const generate = (event, context, callback) => {
   event.Records.forEach((record) => {
     console.log('Stream record: ', JSON.stringify(record, null, 2));
 
-    if (record.eventName == 'INSERT') {
+    if (record.eventName === 'INSERT') {
       const id = record.dynamodb.NewImage.id.S;
       const text = record.dynamodb.NewImage.text.S;
       const name = record.dynamodb.NewImage.name.S;
