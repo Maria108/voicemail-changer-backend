@@ -15,12 +15,18 @@ service: stealth-project # NOTE: update this with your service name
 
 plugins:
   - serverless-webpack
+  - serverless-domain-manager
 
 custom:
   webpack:
     webpackConfig: 'webpack.config.js' # Name of webpack configuration file
     includeModules: true # Node modules configuration for packaging
     packager: 'npm' # Packager that will be used to package your external modules
+  customDomain:
+    domainName: 'vmchanger.abashina.org'
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -61,6 +67,10 @@ provider:
       Resource:
         - "arn:aws:s3:::voicemail-changer-bucket-mp3"
         - "arn:aws:s3:::voicemail-changer-bucket-mp3/*"
+    - Effect: Allow
+      Action: # Gives permission to publish messages.
+        - SNS:Publish
+      Resource: "*"
 
 # you can define service wide environment variables here
 #  environment:
