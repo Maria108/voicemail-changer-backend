@@ -104,6 +104,12 @@ functions:
       - http:
           path: login
           method: post
+  info:
+    handler: src/handlers/info.info
+    events:
+      - http:
+          path: info
+          method: post
   generate:
     handler: src/handlers/generate.generate
     events:
