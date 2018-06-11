@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const { DynamoDB, Polly, S3 } = require('aws-sdk');
 
 export const generate = (event, context, callback) => {
   event.Records.forEach((record) => {
@@ -16,7 +16,7 @@ export const generate = (event, context, callback) => {
 };
 
 function generateMP3(id, text, name) {
-  const Polly = new AWS.Polly();
+  const polly = new Polly();
 
   const params = {
     OutputFormat: 'mp3',
@@ -28,17 +28,17 @@ function generateMP3(id, text, name) {
 
   console.log(params);
 
-  Polly.synthesizeSpeech(params, (err, data) => {
+  polly.synthesizeSpeech(params, (err, data) => {
     if (err) {
       console.error('Error: ', err.code);
     } else if (data) {
       if (data.AudioStream instanceof Buffer) {
-        const s3 = new AWS.S3();
+        const s3 = new S3();
         const s3Params = {
           ACL: 'public-read', // Make it public.
           Body: data.AudioStream,
           ContentType: data.contentType,
-          Bucket: 'voicemail-changer-bucket-mp3',
+          Bucket: 'voicemail-changer-bucket-mp3-new',
           Key: `${id}.mp3`,
           StorageClass: 'REDUCED_REDUNDANCY', // Save costs.
         };
@@ -48,7 +48,7 @@ function generateMP3(id, text, name) {
           const { Location } = data;
           console.log('Location: ', Location);
 
-          const ddb = new AWS.DynamoDB();
+          const ddb = new DynamoDB();
           const ddbParams = {
             ExpressionAttributeNames: {
               '#S': 'status',

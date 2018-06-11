@@ -1,8 +1,8 @@
 const querystring = require('querystring');
-const AWS = require('aws-sdk');
+const { DynamoDB } = require('aws-sdk');
 
 function loginUser(phone, password, callback) {
-  const ddb = new AWS.DynamoDB();
+  const ddb = new DynamoDB();
 
   const params = {
     ExpressionAttributeValues: {

@@ -86,6 +86,28 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
+  call:
+    handler: src/handlers/call.call
+    events:
+      - http:
+          path: call
+          method: post
+          integration: lambda
+          response:
+            headers:
+              Content-Type: "'application/xml'"
+            template: $input.path("$.body.message")
+  changer:
+    handler: src/handlers/changer.changer
+    events:
+      - http:
+          path: changer
+          method: post
+          integration: lambda
+          response:
+            headers:
+              Content-Type: "'application/xml'"
+            template: $input.path("$.body.message")
   submit:
     handler: src/handlers/submit.submit
     events:
@@ -173,16 +195,14 @@ resources:
       Properties:
         TableName: voicemailChangerUsers
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: phone
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: phone
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        StreamSpecification:
-          StreamViewType: NEW_IMAGE
     S3BucketMP3:
       Type: AWS::S3::Bucket
       Properties:

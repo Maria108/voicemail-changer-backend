@@ -1,11 +1,11 @@
 const querystring = require('querystring');
-const AWS = require('aws-sdk');
+const { DynamoDB } = require('aws-sdk');
 
 function dbUpdateUserInfo(params) {
   const {
-    id, name, carrier, pin, text,
+    id, name, carrier, pin, text, phone
   } = params;
-  const ddb = new AWS.DynamoDB();
+  const ddb = new DynamoDB();
   const ddbParams = {
     ExpressionAttributeNames: {
       '#NA': 'name',
@@ -28,8 +28,8 @@ function dbUpdateUserInfo(params) {
       },
     },
     Key: {
-      id: {
-        S: id,
+      phone: {
+        S: phone,
       },
     },
     TableName: 'voicemailChangerUsers',
