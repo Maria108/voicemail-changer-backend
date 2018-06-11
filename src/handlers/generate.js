@@ -38,7 +38,7 @@ function generateMP3(id, text, name) {
           ACL: 'public-read', // Make it public.
           Body: data.AudioStream,
           ContentType: data.contentType,
-          Bucket: 'voicemail-changer-bucket-mp3-new',
+          Bucket: 'voicemail-changer-bucket-mp3',
           Key: `${id}.mp3`,
           StorageClass: 'REDUCED_REDUNDANCY', // Save costs.
         };
