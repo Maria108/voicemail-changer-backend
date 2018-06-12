@@ -52,6 +52,9 @@ export const changer = async (event, context, callback) => {
 
   const response = {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     body: {
       message: xml,
       input: JSON.stringify(event),

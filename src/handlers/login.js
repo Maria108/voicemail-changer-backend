@@ -29,6 +29,9 @@ function loginUser(phone, password, callback) {
     } else {
       response = {
         statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify({
           id: data.Items[0].id.S,
         }),
