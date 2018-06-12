@@ -36,7 +36,7 @@ class Carriers {
   verizon() {
     return `<?xml version="1.0" encoding="UTF-8"?>
       <Response>
-        <Play digits="w1${this.pin}#www4w3ww*"></Play>
+        <Play digits="w${this.pin}#www4w3ww*"></Play>
         <Pause length="4"/>
         <Say voice="woman">${this.text}</Say>
         <Play digits="ww#"></Play>
