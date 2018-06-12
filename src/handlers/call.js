@@ -69,7 +69,7 @@ export const call = async (event, context, callback) => {
 
   twiml.say({
     voice: 'woman',
-  }, 'Congrats! Your voicemail has been updated! Buy!');
+  }, 'Congrats! Your voicemail has been updated! Bye!');
 
   twiml.hangup();
 
