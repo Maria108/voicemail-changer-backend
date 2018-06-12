@@ -45,7 +45,7 @@ function dbCreateItem(phone) {
 
 function sendTextMessage(phone, password) {
   const params = {
-    Message: `This your password: ${password}` /* required */,
+    Message: `This is your password: ${password}` /* required */,
     MessageAttributes: {
       'AWS.SNS.SMS.MaxPrice': {
         DataType: 'Number' /* required */,
