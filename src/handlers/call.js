@@ -40,10 +40,17 @@ const getUserInfo = phone =>
 export const call = async (event, context, callback) => {
   // console.log(JSON.stringify(event.body));
 
-  // Get caller phone number.
-  const { From: phone } = event.body;
+  // Some carriers require to call a custom number.
+  const voicemails = {
+    mint: '+18056377456',
+  };
 
+  // Get caller phone number.
+  let { From: phone } = event.body;
   const userInfo = await getUserInfo(phone);
+
+  // Set custom voicemail number or call same number as caller.
+  phone = voicemails[userInfo.carrier.S] || phone;
 
   const twiml = new twilio.twiml.VoiceResponse();
 

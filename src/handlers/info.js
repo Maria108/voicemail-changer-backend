@@ -3,7 +3,7 @@ const { DynamoDB } = require('aws-sdk');
 
 function dbUpdateUserInfo(params) {
   const {
-    id, name, carrier, pin, text, phone
+    id, name, carrier, pin, text, phone,
   } = params;
   const ddb = new DynamoDB();
   const ddbParams = {
