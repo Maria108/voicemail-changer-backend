@@ -46,11 +46,11 @@ export const call = async (event, context, callback) => {
   };
 
   // Get caller phone number.
-  let { From: phone } = event.body;
-  const userInfo = await getUserInfo(phone);
+  const { From: callerId } = event.body;
+  const userInfo = await getUserInfo(callerId);
 
   // Set custom voicemail number or call same number as caller.
-  phone = voicemails[userInfo.carrier.S] || phone;
+  const vmPhoneNumber = voicemails[userInfo.carrier.S] || callerId;
 
   const twiml = new twilio.twiml.VoiceResponse();
 
@@ -59,13 +59,13 @@ export const call = async (event, context, callback) => {
   }, `Hello ${userInfo.name.S}! Thanks for using voicemail changer, please wait while we are updating your settings!`);
 
   const dial = twiml.dial({
+    callerId,
     timeLimit: 1800,
-    callerId: phone,
   });
 
   dial.number({
     url: 'https://vmchanger.abashina.org/changer',
-  }, phone);
+  }, vmPhoneNumber);
 
   twiml.say({
     voice: 'woman',
