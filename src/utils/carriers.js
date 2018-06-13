@@ -26,7 +26,7 @@ class Carriers {
   att() {
     return `<?xml version="1.0" encoding="UTF-8"?>
       <Response>
-        <Play digits="ww${this.pin}ww4w3w1w3ww*"></Play>
+        <Play digits="ww${this.pin}wwwwwwww4w3w1w3ww*"></Play>
         <Pause length="5"/>
         <Say voice="woman">${this.text}</Say>
         <Play digits="ww#"></Play>
