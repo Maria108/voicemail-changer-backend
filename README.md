@@ -1,6 +1,4 @@
-# Stealth Project
-
-Stealth Project boilerplate
+# Voicemail changer
 
 ## Quick start
 
